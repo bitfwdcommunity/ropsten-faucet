@@ -20,7 +20,7 @@ const url = 'https://ropsten.infura.io/';
 // Generate raw tx
 function generateTx() {
   const txParams = {
-    nonce: '0x04',
+    nonce: '0x07',
     gasPrice: '0x2540be400',
     gasLimit: '0x210000',
     to: '0x53358C20E4697DaaFbabb21ea9d7B871c2C91Ac0',
@@ -36,7 +36,7 @@ function generateTx() {
 }
 
 // Make id same as nonce for simplicity
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
   const rawTx = "0x" + generateTx();
   const params = {
     "jsonrpc": "2.0",
@@ -45,20 +45,22 @@ app.get('/', (req, res) => {
     "params": [rawTx]
   };
 
-  axios({
-    method: 'POST',
-    url: url,
-    headers: {
-      "Content-Type": "application/json"
-    },
-    data: params
-  }).catch((error) => {
+  let response;
+  try {
+    response = await axios({
+      method: 'POST',
+      url: url,
+      headers: {
+        "Content-Type": "application/json"
+      },
+      data: params
+    });
+  } catch (error) {
     console.log(error.message);
-  }).then((resp) => {
-    console.log(resp);
-  }).catch((error) => {
-    console.log(error.message);
-  });
+    return res.status(500);
+  }
+  if (response.status != 200) return res.status(500);
+  console.log(response.data);
 })
 
 app.listen(3000, () => {
