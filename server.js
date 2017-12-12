@@ -18,9 +18,9 @@ const url = 'https://ropsten.infura.io/';
 
 // get nonce in future using 'getTransactionCount'
 // Generate raw tx
-function generateTx() {
+function generateTx(nonce) {
   const txParams = {
-    nonce: '0x07',
+    nonce: nonce,
     gasPrice: '0x2540be400',
     gasLimit: '0x210000',
     to: '0x53358C20E4697DaaFbabb21ea9d7B871c2C91Ac0',
@@ -37,7 +37,28 @@ function generateTx() {
 
 // Make id same as nonce for simplicity
 app.get('/', async (req, res) => {
-  const rawTx = "0x" + generateTx();
+  let response;
+  try {
+    response = await axios({
+      method: 'POST',
+      url: url,
+      headers: {
+        "Content-Type": "application/json"
+      },
+      data: {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "method": "eth_getTransactionCount",
+        "params": ["0xe17F97b518E9E8bBC9b72Ab88fd3f9db10BeA981", "latest"]
+      }
+    });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500);
+  }
+  const txCount = response.data.result;
+
+  const rawTx = "0x" + generateTx(txCount);
   const params = {
     "jsonrpc": "2.0",
     "id": 1,
@@ -45,7 +66,6 @@ app.get('/', async (req, res) => {
     "params": [rawTx]
   };
 
-  let response;
   try {
     response = await axios({
       method: 'POST',
@@ -60,7 +80,8 @@ app.get('/', async (req, res) => {
     return res.status(500);
   }
   if (response.status != 200) return res.status(500);
-  console.log(response.data);
+
+  res.send(response.data.result);
 })
 
 app.listen(3000, () => {
