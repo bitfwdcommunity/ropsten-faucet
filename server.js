@@ -1,10 +1,13 @@
 const EthereumTx = require('ethereumjs-tx');
 const express = require('express');
 const axios = require('axios');
+const bodyParser = require('body-parser');
 
 const config = require('./config.js');
 
 const app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 const privateKey = config.privateKey;
 const key = Buffer.from(privateKey, 'hex');
@@ -18,12 +21,12 @@ const url = 'https://ropsten.infura.io/';
 
 // get nonce in future using 'getTransactionCount'
 // Generate raw tx
-function generateTx(nonce) {
+function generateTx(nonce, to) {
   const txParams = {
     nonce: nonce,
     gasPrice: '0x2540be400',
     gasLimit: '0x210000',
-    to: '0x53358C20E4697DaaFbabb21ea9d7B871c2C91Ac0',
+    to: to,
     value: '0x00',
     data: '0x00',
     chainId: 3
@@ -36,7 +39,9 @@ function generateTx(nonce) {
 }
 
 // Make id same as nonce for simplicity
-app.get('/', async (req, res) => {
+app.post('/api/eth_sendRawTransaction', async (req, res) => {
+  if (!req.body) return res.sendStatus(400);
+  const to = req.body.address;
   let response;
   try {
     response = await axios({
@@ -49,7 +54,7 @@ app.get('/', async (req, res) => {
         "jsonrpc": "2.0",
         "id": 1,
         "method": "eth_getTransactionCount",
-        "params": ["0xe17F97b518E9E8bBC9b72Ab88fd3f9db10BeA981", "latest"]
+        "params": [config.address, "latest"]
       }
     });
   } catch (error) {
@@ -58,7 +63,7 @@ app.get('/', async (req, res) => {
   }
   const txCount = response.data.result;
 
-  const rawTx = "0x" + generateTx(txCount);
+  const rawTx = "0x" + generateTx(txCount, to);
   const params = {
     "jsonrpc": "2.0",
     "id": 1,
