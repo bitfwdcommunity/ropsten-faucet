@@ -67,29 +67,40 @@ app.post('/api/eth_sendRawTransaction', cors(), async (req, res) => {
     console.log(error.message);
     return res.status(500);
   }
-  const txCount = response.data.result;
+  let txCount = response.data.result;
 
-  const rawTx = "0x" + generateTx(txCount, to);
-  const params = {
-    "jsonrpc": "2.0",
-    "id": 1,
-    "method": "eth_sendRawTransaction",
-    "params": [rawTx]
-  };
+  let done = false;
 
-  try {
-    response = await axios({
-      method: 'POST',
-      url: url,
-      headers: {
-        "Content-Type": "application/json"
-      },
-      data: params
-    });
-  } catch (error) {
-    console.log(error.message);
-    return res.status(500);
+  while (!done) {
+    console.log('attempting to send');
+    let rawTx = "0x" + generateTx(txCount, to);
+    let params = {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "method": "eth_sendRawTransaction",
+      "params": [rawTx]
+    };
+
+    try {
+      response = await axios({
+        method: 'POST',
+        url: url,
+        headers: {
+          "Content-Type": "application/json"
+        },
+        data: params
+      });
+      if (typeof response.data.result != "undefined") {
+        done = true;
+      } else if (response.data.error.message != "undefined") {
+        if (response.data.error.message == "nonce too low") txCount++;
+      }
+    } catch (error) {
+      console.log(error.message);
+      return res.status(500);
+    }
   }
+
   if (response.status != 200) return res.status(500);
 
   res.send(response.data.result);
