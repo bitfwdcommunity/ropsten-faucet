@@ -2,12 +2,17 @@ const EthereumTx = require('ethereumjs-tx');
 const express = require('express');
 const axios = require('axios');
 const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const cors = require('cors');
 
 const config = require('./config.js');
 
 const app = express();
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(morgan('combined'));
+app.options('/api/eth_sendRawTransaction', cors());
 
 const privateKey = config.privateKey;
 const key = Buffer.from(privateKey, 'hex');
@@ -39,8 +44,9 @@ function generateTx(nonce, to) {
 }
 
 // Make id same as nonce for simplicity
-app.post('/api/eth_sendRawTransaction', async (req, res) => {
+app.post('/api/eth_sendRawTransaction', cors(), async (req, res) => {
   if (!req.body) return res.sendStatus(400);
+  console.log('received request');
   const to = req.body.address;
   let response;
   try {
