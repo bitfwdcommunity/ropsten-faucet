@@ -3,7 +3,6 @@ import axios from 'axios';
 
 import './App.css';
 
-// TODO: Websocket with array queue
 // TODO: Notification showing tx hash
 
 class App extends Component {
@@ -22,7 +21,7 @@ class App extends Component {
   handleSubmit(e) {
     e.preventDefault();
     let address = this.state.address;
-    const url = 'http://localhost:3000/api/eth_sendRawTransaction';
+    const url = 'http://localhost:3001/api/eth_sendRawTransaction';
 
     axios({
       method: 'POST',
@@ -57,7 +56,7 @@ class App extends Component {
         <form onSubmit={this.handleSubmit}>
           <label>
             Address:
-            <input type="text" value={this.state.value} onChange={this.handleChange} />
+            <input type="text" value={this.state.address} onChange={this.handleChange} />
           </label>
           <input type="submit" value="Send Me Ethers!" />
         </form>
