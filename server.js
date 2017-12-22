@@ -27,12 +27,16 @@ const url = 'https://ropsten.infura.io/';
 // get nonce in future using 'getTransactionCount'
 // Generate raw tx
 function generateTx(nonce, to) {
+  const testWeiAmount = 1000000000000000;
+  const value = '0x' + parseInt(testWeiAmount).toString(16);
+  // const amount = 3000000000000000000;
+  // const value = '0x' + parseInt(amount).toString(16);
   const txParams = {
     nonce: nonce,
     gasPrice: '0x2540be400',
     gasLimit: '0x210000',
     to: to,
-    value: '0x00',
+    value: value,
     data: '0x00',
     chainId: 3
   }
@@ -90,6 +94,7 @@ app.post('/api/eth_sendRawTransaction', cors(), async (req, res) => {
         },
         data: params
       });
+
       if (typeof response.data.result != "undefined") {
         done = true;
       } else if (response.data.error.message != "undefined") {
@@ -106,6 +111,6 @@ app.post('/api/eth_sendRawTransaction', cors(), async (req, res) => {
   res.send(response.data.result);
 })
 
-app.listen(3000, () => {
-  console.log('Ropsten faucet listening on port 3000');
+app.listen(3001, () => {
+  console.log('Ropsten faucet listening on port 3001');
 })
