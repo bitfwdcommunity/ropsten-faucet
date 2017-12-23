@@ -20,6 +20,7 @@
     "morgan": "^1.9.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-notification-system": "^0.2.16",
     "react-scripts": "^1.0.17"
   }
 }
