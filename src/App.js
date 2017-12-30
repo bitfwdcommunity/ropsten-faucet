@@ -31,7 +31,7 @@ class App extends Component {
           window.open('https://ropsten.etherscan.io/tx/' + txHash);
         }
       }
-    }
+    } 
     switch(type) {
       case 'success':
         this.notificationSystem.addNotification({
@@ -62,9 +62,10 @@ class App extends Component {
     let address = this.state.address;
     const url = 'http://localhost:3001/api/eth_sendRawTransaction';
 
-    let type = 'error';
+    let type = '';
     let response;
     let txHash = '';
+    let post_error = false;
 
     try {
       response = await axios({
@@ -78,12 +79,17 @@ class App extends Component {
         })
       })
     } catch(e) {
-      console.log(e);
+      console.log(e.response);
+      post_error = true;
+      type = 'error';
+      txHash = e.response.data;
     }
 
-    if (response['data']) {
-      type = 'success';
-      txHash = response.data;
+    if (!post_error) {
+      if (response['data']) {
+        type = 'success';
+        txHash = response.data;
+      }
     }
 
     this.addNotification(type, txHash);

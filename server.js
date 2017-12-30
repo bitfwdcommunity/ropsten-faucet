@@ -103,6 +103,9 @@ app.post('/api/eth_sendRawTransaction', cors(), async (req, res) => {
   setup_blacklist(path)
   // release variable below determines whether IP is blacklisted
   let release = release_ether(ip_path)
+  if (!release) {
+    res.status(429).send('IP address temporarily blacklisted.');
+  }
 
   const to = req.body.address;
   let response;
@@ -128,7 +131,7 @@ app.post('/api/eth_sendRawTransaction', cors(), async (req, res) => {
 
   let done = false;
 
-  while (!done && release) {
+  while (!done) {
     console.log('attempting to send');
     let rawTx = "0x" + generateTx(txCount, to);
     let params = {
