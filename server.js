@@ -4,6 +4,9 @@ const axios = require('axios');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
+const fs = require('fs');
+const touch = require('touch');
+const moment = require('moment');
 
 const config = require('./config.js');
 
@@ -17,6 +20,7 @@ app.options('/api/eth_sendRawTransaction', cors());
 const privateKey = config.privateKey;
 const key = Buffer.from(privateKey, 'hex');
 const url = 'https://ropsten.infura.io/';
+const blacklist_time = 30; //mins
 
 // Axios request interceptor
 // axios.interceptors.request.use(request => {
@@ -47,10 +51,59 @@ function generateTx(nonce, to) {
   return serializedTx.toString('hex');
 }
 
+// create temporary working director for IP blacklist
+function setup_blacklist(path) {
+  try {
+    fs.mkdir(path, function(err) {});
+  } catch (err) {
+    if (err.code != 'EEXIST') {
+      throw err;
+    }
+  }
+  return true
+}
+
+// use blacklist to detemine ether eligbility 
+  // stat the file, if virgin touch the file and release the ether
+  // if file exists check modified date
+  // < 30 mins reject 
+  // > 30 mins touch the file and release 
+function release_ether(ip_path) { 
+  try {
+    let stats = fs.statSync(ip_path);
+
+    // mtime sample 2017-12-29T14:24:26.472Z
+    var mtime = moment(stats['mtime']);
+    var now = moment();
+    var duration = moment.duration(now.diff(mtime));
+    
+    if (duration.asMinutes() > blacklist_time) {
+        touch.sync(ip_path);
+        return true;
+    } else {
+        console.log(ip_path + ' - blacklisted')
+        return false;
+    }
+  }
+  catch (err) {
+      touch.sync(ip_path)
+      return true;
+  }
+}
+
 // Make id same as nonce for simplicity
 app.post('/api/eth_sendRawTransaction', cors(), async (req, res) => {
   if (!req.body) return res.sendStatus(400);
   console.log('received request');
+
+  // get IP address and set up paths
+  let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  let path = "/tmp/faucet/"
+  let ip_path = path + ip
+  setup_blacklist(path)
+  // release variable below determines whether IP is blacklisted
+  let release = release_ether(ip_path)
+
   const to = req.body.address;
   let response;
   try {
@@ -75,7 +128,7 @@ app.post('/api/eth_sendRawTransaction', cors(), async (req, res) => {
 
   let done = false;
 
-  while (!done) {
+  while (!done && release) {
     console.log('attempting to send');
     let rawTx = "0x" + generateTx(txCount, to);
     let params = {
