@@ -31,7 +31,7 @@ class App extends Component {
           window.open('https://ropsten.etherscan.io/tx/' + txHash);
         }
       }
-    } 
+    }
     switch(type) {
       case 'success':
         this.notificationSystem.addNotification({
@@ -99,27 +99,27 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">bitfwd ropsten faucet</h1>
-        </header>
-        <div className="App-text">
-          Hi! Welcome to the bitfwd ropsten faucet! We are a community of individuals
-          from the Asia Pacific that are interested in supporting the Ethereum ecosystem.
-          You can checkout the stuff we have done <a href="https://www.bitfwd.xyz">here</a>.
-          We will dispense 3 ETHs each time. There'll be a cooldown period of an hour.
-          If you need more Ropsten ETHs, you are welcome to come back for more later.
+      <div className="container">
+        <div className="container-row">
+            <header className="App-header">
+              <h1 className="App-title">bitfwd ropsten faucet</h1>
+            </header>
+            <div className="App-text">
+              check us out <a href="https://www.bitfwd.xyz">here</a>! happy developing!
+            </div>
+            <br />
+            <div>
+              <form className="App-form" onSubmit={this.handleSubmit}>
+                <label>
+                  address &emsp;
+                  <input type="text" value={this.state.address} onChange={this.handleChange} />
+                </label>
+                &emsp;
+                <input type="submit" value="ethers please!" />
+              </form>
+            </div>
+            <NotificationSystem ref="notificationSystem" />
         </div>
-        <div>
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              Address:
-              <input type="text" value={this.state.address} onChange={this.handleChange} />
-            </label>
-            <input type="submit" value="Send Me Ethers!" />
-          </form>
-        </div>
-        <NotificationSystem ref="notificationSystem" />
       </div>
     );
   }
