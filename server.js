@@ -31,10 +31,10 @@ const blacklist_time = 30; //mins
 // get nonce in future using 'getTransactionCount'
 // Generate raw tx
 function generateTx(nonce, to) {
-  const testWeiAmount = 1000000000000000;
-  const value = '0x' + parseInt(testWeiAmount).toString(16);
-  // const amount = 3000000000000000000;
-  // const value = '0x' + parseInt(amount).toString(16);
+  // const testWeiAmount = 1000000000000000;
+  // const value = '0x' + parseInt(testWeiAmount).toString(16);
+  const amount = 5000000000000000000;
+  const value = '0x' + parseInt(amount).toString(16);
   const txParams = {
     nonce: nonce,
     gasPrice: '0x2540be400',
@@ -63,12 +63,12 @@ function setup_blacklist(path) {
   return true
 }
 
-// use blacklist to detemine ether eligbility 
+// use blacklist to detemine ether eligbility
   // stat the file, if virgin touch the file and release the ether
   // if file exists check modified date
-  // < 30 mins reject 
-  // > 30 mins touch the file and release 
-function release_ether(ip_path) { 
+  // < 30 mins reject
+  // > 30 mins touch the file and release
+function release_ether(ip_path) {
   try {
     let stats = fs.statSync(ip_path);
 
@@ -76,7 +76,7 @@ function release_ether(ip_path) {
     var mtime = moment(stats['mtime']);
     var now = moment();
     var duration = moment.duration(now.diff(mtime));
-    
+
     if (duration.asMinutes() > blacklist_time) {
         touch.sync(ip_path);
         return true;

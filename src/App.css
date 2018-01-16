@@ -37,7 +37,7 @@ input[type=text] {
 }
 
 input[type=submit] {
-  padding: 0.3rem;
+  padding: 0.25rem;
   background: #FFFFFF;
   border: 2px solid #3C3C3D;
   cursor: pointer;

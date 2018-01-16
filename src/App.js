@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import NotificationSystem from 'react-notification-system';
 import axios from 'axios';
 
-// import 'react-notifications/lib/notifications.css';
 import './App.css';
 
 // TODO: Notification showing tx hash
@@ -60,7 +59,7 @@ class App extends Component {
   async handleSubmit(e) {
     e.preventDefault();
     let address = this.state.address;
-    const url = 'http://localhost:3001/api/eth_sendRawTransaction';
+    const url = 'https://toolbox.bitfwd.xyz/api/eth_sendRawTransaction';
 
     let type = '';
     let response;
@@ -102,20 +101,20 @@ class App extends Component {
       <div className="container">
         <div className="container-row">
             <header className="App-header">
-              <h1 className="App-title">bitfwd ropsten faucet</h1>
+              <h1 className="App-title">bokky & bitfwd's ropsten faucet</h1>
             </header>
             <div className="App-text">
-              check us out <a href="https://www.bitfwd.xyz">here</a>! happy developing!
+              check out <a href="https://www.bitfwd.xyz">bitfwd</a> &amp; <a href="https://github.com/bokkypoobah">bokky</a>! happy developing!
             </div>
             <br />
-            <div>
+            <div className="App-text">
               <form className="App-form" onSubmit={this.handleSubmit}>
                 <label>
-                  address &emsp;
+                  address &ensp;
                   <input type="text" value={this.state.address} onChange={this.handleChange} />
                 </label>
                 &emsp;
-                <input type="submit" value="ethers please!" />
+                <input type="submit" value="eths pls!" />
               </form>
             </div>
             <NotificationSystem ref="notificationSystem" />
