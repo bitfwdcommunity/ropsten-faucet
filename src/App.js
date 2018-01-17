@@ -21,13 +21,13 @@ class App extends Component {
     this.notificationSystem = this.refs.notificationSystem;
   }
 
-  addNotification(type, txHash, response) {
+  addNotification(type, response) {
     let action;
     if (type === 'success') {
       action = {
         label: 'View Transaction',
         callback: function() {
-          window.open('https://ropsten.etherscan.io/tx/' + txHash);
+          window.open('https://ropsten.etherscan.io/tx/' + response);
         }
       }
     }
@@ -98,7 +98,7 @@ class App extends Component {
       }
     }
 
-    this.addNotification(type, txHash, e.response.data);
+    this.addNotification(type, txHash);
 
     this.setState({address: ''});
   }
