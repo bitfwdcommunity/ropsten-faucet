@@ -21,7 +21,7 @@ class App extends Component {
     this.notificationSystem = this.refs.notificationSystem;
   }
 
-  addNotification(type, txHash) {
+  addNotification(type, txHash, response) {
     let action;
     if (type === 'success') {
       action = {
@@ -41,11 +41,19 @@ class App extends Component {
         });
         break;
       case 'error':
-        this.notificationSystem.addNotification({
-          message: 'Transaction Unsuccessful!',
-          level: type,
-          position: 'bc'
-        });
+        if (response === 'IP address temporarily blacklisted.') {
+          this.notificationSystem.addNotification({
+            message: "You've already taken some ropstens recently, try again in 30 minutes.",
+            level: type,
+            position: 'bc'
+          });
+        } else {
+          this.notificationSystem.addNotification({
+            message: 'Transaction Unsuccessful!',
+            level: type,
+            position: 'bc'
+          });
+        }
         break;
       default:
         break;
@@ -78,7 +86,6 @@ class App extends Component {
         })
       })
     } catch(e) {
-      console.log(e.response);
       post_error = true;
       type = 'error';
       txHash = e.response.data;
@@ -91,7 +98,7 @@ class App extends Component {
       }
     }
 
-    this.addNotification(type, txHash);
+    this.addNotification(type, txHash, e.response.data);
 
     this.setState({address: ''});
   }
