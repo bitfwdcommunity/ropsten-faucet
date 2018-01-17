@@ -101,7 +101,7 @@ class App extends Component {
       <div className="container">
         <div className="container-row">
             <header className="App-header">
-              <h1 className="App-title">bokky & bitfwd's ropsten faucet</h1>
+              <h1 className="App-title">bitfwd & bokky's ropsten faucet</h1>
             </header>
             <div className="App-text">
               check out <a href="https://www.bitfwd.xyz">bitfwd</a> &amp; <a href="https://github.com/bokkypoobah">bokky</a>! happy developing!
