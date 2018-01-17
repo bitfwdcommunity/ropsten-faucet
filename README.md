@@ -1,5 +1,16 @@
 # Instructions
 
+## Config
+
+You must also include a 'config.js' file that contains the following code:
+
+```
+module.exports = {
+  'address': (address you are sending from),
+  'privateKey': (private key of address)
+}
+```
+
 ## Deployment
 
 Deploy server.js as a node server on the web host of your choice.
