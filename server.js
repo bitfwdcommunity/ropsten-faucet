@@ -105,6 +105,7 @@ app.post('/api/eth_sendRawTransaction', cors(), async (req, res) => {
   let release = release_ether(ip_path)
   if (!release) {
     res.status(429).send('IP address temporarily blacklisted.');
+    return false;
   }
 
   const to = req.body.address;
