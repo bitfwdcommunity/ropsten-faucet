@@ -33,7 +33,7 @@ const blacklist_time = 30; //mins
 function generateTx(nonce, to) {
   // const testWeiAmount = 1000000000000000;
   // const value = '0x' + parseInt(testWeiAmount).toString(16);
-  const amount = 5000000000000000000;
+  const amount = 3000000000000000000;
   const value = '0x' + parseInt(amount).toString(16);
   const txParams = {
     nonce: nonce,
