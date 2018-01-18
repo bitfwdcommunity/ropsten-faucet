@@ -21,11 +21,25 @@ The react app can be deployed by first building the application using
 
 before copying the build folder's contents into the static file host of your choice.
 
-## Modifying The Code
+## Running The Code
+
+Run
+
+`npm install`
+
+to install npm dependencies.
+
+Open two terminals, run
 
 `npm start`
 
 to build the code, changes will be loaded automatically as you make them.
+
+In the other terminal, run
+
+`node server.js`
+
+to run the server from which blacklisting and tx generation will take place.
 
 ## License
 
