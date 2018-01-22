@@ -38,7 +38,7 @@ function generateTx(nonce, to) {
   const txParams = {
     nonce: nonce,
     gasPrice: '0x2540be400',
-    gasLimit: '0x210000',
+    gasLimit: '0xc350',
     to: to,
     value: value,
     data: '0x00',
