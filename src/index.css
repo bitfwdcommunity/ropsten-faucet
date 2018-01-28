@@ -1,6 +1,10 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Roboto', sans-serif;
-  color: #3C3C3D;
+  font-family: 'Inconsolata', monospace;
+  color: #ffffff;
+
+  background-image: url('/img/background.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
