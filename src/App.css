@@ -1,50 +1,71 @@
-.App-header {
-  text-align: center;
+span.txt-blue {
+  color: #02d7ea;
 }
 
-.App-title {
-  font-size: 3rem;
-  margin: 0 0 1rem 0;
+img.poweredby {
+  width: 100%;
+  height: auto
 }
 
-.App-intro {
-  font-size: large;
-}
-
-.App-text {
-  text-align: center;
-}
-
-.App-form {
-  display: inline-block;
+a, a:hover {
+  color: #02d7ea;
+  text-decoration: underline;
 }
 
 .container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
+  padding-top: 120px;
+  padding-bottom: 120px;
 }
 
-.container-row {
+.padding-bottom {
+  padding-bottom: 30px;
 }
 
-input[type=text] {
-  padding: 0.3rem;
-  border: 2px solid #3C3C3D;
-  border-radius: 1rem;
-  width: 18rem;
+.width100 {
+  width: 100%;
 }
 
-input[type=submit] {
-  padding: 0.25rem;
-  background: #FFFFFF;
-  border: 2px solid #3C3C3D;
+ul.features-list {
+  font-size: 1.4em;
+}
+
+ul.features-list li {
+  list-style-image: url('/img/check.png');
+}
+
+.fwd-input {
+  border: 1px solid #ffffff;
+  border-radius: 2px;
+  background-color: transparent;
+  color: #02d7ea;
+  text-align: center;
+}
+
+.fwd-btn {
+  background: #02d7ea;
+  color: #000;
+  border-radius: 4px;
+  border: none;
   cursor: pointer;
-  border-radius: 1rem;
+  border: 1px solid #02d7ea;
 }
 
-input[type=submit]:hover {
-  background: #3C3C3D;
-  color: #FFFFFF;
+a.fwd-btn {
+  text-decoration: none;
+}
+
+.fwd-btn:hover {
+  background: transparent;
+  color: #02d7ea;
+}
+
+.fwd-btn,
+.fwd-input {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-size: 1.1em;
+}
+
+.hspace {
+  height: 40px
 }
