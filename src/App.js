@@ -184,7 +184,7 @@ class App extends Component {
         </div>
         <footer className="row" style={{paddingTop: "40px"}}>
           <div className="col">
-            <center><a href="https://twitter.com/bitfwdxyz" target="_blank">twitter</a> - <a href="https://medium.com/bitfwd" target="_blank">medium</a> - <a href="https://www.facebook.com/bitfwd/" target="_blank">facebook</a></center>
+            <center><a href="https://t.me/joinchat/EDRmq1Km4zYE-0aQ7SPUng" target="_blank">telegram</a> - <a href="https://twitter.com/bitfwdxyz" target="_blank">twitter</a> - <a href="https://medium.com/bitfwd" target="_blank">medium</a> - <a href="https://www.facebook.com/bitfwd/" target="_blank">facebook</a></center>
           </div>
         </footer>
       </div>
