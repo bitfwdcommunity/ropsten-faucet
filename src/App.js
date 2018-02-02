@@ -172,11 +172,11 @@ class App extends Component {
             </div>
             <div className="row">
               <div className="col">
-                <form action="https://xyz.us12.list-manage.com/subscribe/post?u=e305133cac0aefe39c72fb9ea&amp;id=e95f04b163" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                <form action="https://xyz.us12.list-manage.com/subscribe/post?u=e305133cac0aefe39c72fb9ea&amp;id=e95f04b163" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" className="validate" target="_blank" noValidate>
                   <input className="fwd-input width100" type="email" name="EMAIL" id="mce-EMAIL" placeholder="Email" required/>
-                  <div style={{position: "absolute", left: "-5000px"}} aria-hidden="true"><input type="text" name="b_e305133cac0aefe39c72fb9ea_e95f04b163" tabindex="-1" value=""/></div>
+                  <div style={{position: "absolute", left: "-5000px"}} aria-hidden="true"><input type="text" name="b_e305133cac0aefe39c72fb9ea_e95f04b163" tabIndex="-1" value=""/></div>
                   <br />
-                  <input type="submit" style={{marginTop: 8}} value="JOIN THE COMMUNITY" name="subscribe" id="mc-embedded-subscribe" class="fwd-btn width100"/>
+                  <input type="submit" style={{marginTop: 8}} value="JOIN THE COMMUNITY" name="subscribe" id="mc-embedded-subscribe" className="fwd-btn width100"/>
                 </form>
               </div>
             </div>
