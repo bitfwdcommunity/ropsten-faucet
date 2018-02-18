@@ -81,6 +81,7 @@ class App extends Component {
 
   async handleSubmit(e) {
     e.preventDefault();
+    window.grecaptcha.reset();
     let address = this.state.address;
     let recaptcha = this.state.recaptcha;
     const url = 'https://toolbox.bitfwd.xyz/api/eth_sendRawTransaction';
