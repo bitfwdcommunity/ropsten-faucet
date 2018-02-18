@@ -98,6 +98,7 @@ app.post('/api/eth_sendRawTransaction', cors(), async (req, res) => {
   if (!req.body) return res.sendStatus(400);
   console.log('received request');
 
+  if (!req.body.address) return res.status(429).send('Empty address field.');
   // get IP address and set up paths
   let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   let path = "/tmp/faucet/"
