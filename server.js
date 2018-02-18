@@ -7,6 +7,7 @@ const cors = require('cors');
 const fs = require('fs');
 const touch = require('touch');
 const moment = require('moment');
+const querystring = require('querystring');
 
 const config = require('./config.js');
 
@@ -116,21 +117,20 @@ app.post('/api/eth_sendRawTransaction', cors(), async (req, res) => {
       method: 'POST',
       url: 'https://www.google.com/recaptcha/api/siteverify',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/x-www-form-urlencoded'
       },
-      data: {
-        secret: recaptchaSecret,
-        response: req.body['g-recaptcha-response'],
-        remoteip: ip
-      }
-    })
+      data: querystring.stringify({
+        'response': req.body['g-recaptcha-response'],
+        'secret': recaptchaSecret
+      })
+    });
   } catch (error) {
     console.log(error.message);
     return res.status(500);
   }
 
-  if (!captchaResponse.success) res.status(429).send('Invalid Recaptcha.');
-  if (captchaResponse.hostname != ip) console.log('Captcha was not solved at host ip');
+  if (!captchaResponse.data.success) res.status(429).send('Invalid Recaptcha.');
+  if (captchaResponse.data.hostname != ip) console.log('Captcha was not solved at host ip');
 
   const to = req.body.address;
   let response;
