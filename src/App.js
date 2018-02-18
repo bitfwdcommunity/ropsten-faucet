@@ -56,6 +56,12 @@ class App extends Component {
             level: type,
             position: 'bc'
           });
+        } else if (response === 'Empty address field.'){
+          this.notificationSystem.addNotification({
+            message: "Address field cannot be empty.",
+            level: type,
+            position: 'bc'
+          })
         } else {
           this.notificationSystem.addNotification({
             message: 'Transaction Unsuccessful!',
