@@ -53,7 +53,7 @@ function generateTx(nonce, to) {
 }
 
 // create temporary working director for IP blacklist
-function setup_blacklist(path) {
+function setupBlacklist(path) {
   try {
     fs.mkdir(path, function(err) {});
   } catch (err) {
@@ -69,7 +69,7 @@ function setup_blacklist(path) {
   // if file exists check modified date
   // < 30 mins reject
   // > 30 mins touch the file and release
-function release_ether(ip_path) {
+function releaseEther(ip_path) {
   try {
     let stats = fs.statSync(ip_path);
 
@@ -101,9 +101,9 @@ app.post('/api/eth_sendRawTransaction', cors(), async (req, res) => {
   let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   let path = "/tmp/faucet/"
   let ip_path = path + ip
-  setup_blacklist(path)
+  setupBlacklist(path)
   // release variable below determines whether IP is blacklisted
-  let release = release_ether(ip_path)
+  let release = releaseEther(ip_path)
   if (!release) {
     res.status(429).send('IP address temporarily blacklisted.');
     return false;
