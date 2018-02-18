@@ -21,6 +21,7 @@ const privateKey = config.privateKey;
 const key = Buffer.from(privateKey, 'hex');
 const url = 'https://ropsten.infura.io/';
 const blacklist_time = 30; //mins
+const recaptchaSecret = config.recaptchaSecret;
 
 // Axios request interceptor
 // axios.interceptors.request.use(request => {
@@ -107,6 +108,29 @@ app.post('/api/eth_sendRawTransaction', cors(), async (req, res) => {
     res.status(429).send('IP address temporarily blacklisted.');
     return false;
   }
+
+  // check captcha
+  let captchaResponse;
+  try {
+    captchaResponse = await axios({
+      method: 'POST',
+      url: 'https://www.google.com/recaptcha/api/siteverify',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      data: {
+        secret: recaptchaSecret,
+        response: req.body['g-recaptcha-response'],
+        remoteip: ip
+      }
+    })
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500);
+  }
+
+  if (!captchaResponse.success) res.status(429).send('Invalid Recaptcha.');
+  if (captchaResponse.hostname != ip) console.log('Captcha was not solved at host ip');
 
   const to = req.body.address;
   let response;
