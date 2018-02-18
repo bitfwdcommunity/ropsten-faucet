@@ -129,7 +129,7 @@ app.post('/api/eth_sendRawTransaction', cors(), async (req, res) => {
     return res.status(500);
   }
 
-  if (!captchaResponse.data.success) res.status(429).send('Invalid Recaptcha.');
+  if (!captchaResponse.data.success) return res.status(429).send('Invalid Recaptcha.');
   if (captchaResponse.data.hostname != ip) console.log('Captcha was not solved at host ip');
 
   const to = req.body.address;
