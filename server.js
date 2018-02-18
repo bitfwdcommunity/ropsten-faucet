@@ -98,18 +98,13 @@ app.post('/api/eth_sendRawTransaction', cors(), async (req, res) => {
   if (!req.body) return res.sendStatus(400);
   console.log('received request');
 
-  if (!req.body.address) return res.status(429).send('Empty address field.');
+  if (!req.body.address) return res.status(422).send('Empty address field.');
+
   // get IP address and set up paths
   let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   let path = "/tmp/faucet/"
   let ip_path = path + ip
   setupBlacklist(path)
-  // release variable below determines whether IP is blacklisted
-  let release = releaseEther(ip_path)
-  if (!release) {
-    res.status(429).send('IP address temporarily blacklisted.');
-    return false;
-  }
 
   // check captcha
   let captchaResponse;
@@ -130,8 +125,15 @@ app.post('/api/eth_sendRawTransaction', cors(), async (req, res) => {
     return res.status(500);
   }
 
-  if (!captchaResponse.data.success) return res.status(429).send('Invalid Recaptcha.');
+  if (!captchaResponse.data.success) return res.status(409).send('Invalid Recaptcha.');
   if (captchaResponse.data.hostname != ip) console.log('Captcha was not solved at host ip');
+
+  // release variable below determines whether IP is blacklisted
+  let release = releaseEther(ip_path)
+  if (!release) {
+    res.status(429).send('IP address temporarily blacklisted.');
+    return false;
+  }
 
   const to = req.body.address;
   let response;
