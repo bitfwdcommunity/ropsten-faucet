@@ -50,6 +50,12 @@ class App extends Component {
             level: type,
             position: 'bc'
           });
+        } else if (response === 'Invalid Recaptcha.') {
+          this.notificationSystem.addNotification({
+            message: "Invalid recaptcha response, try again.",
+            level: type,
+            position: 'bc'
+          });
         } else {
           this.notificationSystem.addNotification({
             message: 'Transaction Unsuccessful!',
