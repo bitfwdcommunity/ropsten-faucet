@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
 import NotificationSystem from 'react-notification-system';
+import ReCAPTCHA from 'react-google-recaptcha';
 import axios from 'axios';
 
 import './App.css';
 
-// TODO: Notification showing tx hash
-
 class App extends Component {
   constructor() {
     super();
-    this.state = {address: ''};
+    this.state = {
+      'address': '',
+      'recaptcha': '',
+    };
     this.notificationSystem = null;
 
     this.addNotification = this.addNotification.bind(this);
+    this.handleCaptchaResponse = this.handleCaptchaResponse.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -61,12 +64,13 @@ class App extends Component {
   }
 
   handleChange(e) {
-    this.setState({address: e.target.value});
+    this.setState({ 'address': e.target.value});
   }
 
   async handleSubmit(e) {
     e.preventDefault();
     let address = this.state.address;
+    let recaptcha = this.state.recaptcha;
     const url = 'https://toolbox.bitfwd.xyz/api/eth_sendRawTransaction';
 
     let type = '';
@@ -82,7 +86,8 @@ class App extends Component {
           'Content-Type': 'application/json'
         },
         data: JSON.stringify({
-          address: address,
+          'address': address,
+          'g-recaptcha-response': recaptcha
         })
       })
     } catch(e) {
@@ -100,7 +105,11 @@ class App extends Component {
 
     this.addNotification(type, txHash);
 
-    this.setState({address: ''});
+    this.setState({ 'address': ''});
+  }
+
+  handleCaptchaResponse(response) {
+    this.setState({ 'recaptcha': response })
   }
 
   render() {
@@ -130,8 +139,10 @@ class App extends Component {
             <div className="row">
               <form onSubmit={this.handleSubmit} style={{width: "100%"}}>
                 <input className="fwd-input" style={{width: "65%", marginRight: "8px"}} placeholder="Your Ethereum Address" type="text" value={this.state.address} onChange={this.handleChange} />
+                <ReCAPTCHA sitekey="6Lc36UYUAAAAAKIoH-Yyqxn7Mw51MuzC884LS8M5" onChange={this.handleCaptchaResponse} />
                 <input className="fwd-btn" style={{width: "30%"}} type="submit" value="Get ETH!" />
               </form>
+              <br />
               <NotificationSystem ref="notificationSystem" />
             </div>
           </div>

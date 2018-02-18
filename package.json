@@ -20,7 +20,9 @@
     "moment": "^2.20.1",
     "morgan": "^1.9.0",
     "react": "^16.2.0",
+    "react-async-script": "^0.9.1",
     "react-dom": "^16.2.0",
+    "react-google-recaptcha": "^0.9.9",
     "react-notification-system": "^0.2.16",
     "react-scripts": "^1.0.17",
     "touch": "^3.1.0"
