@@ -21,7 +21,7 @@ app.options('/api/eth_sendRawTransaction', cors());
 const privateKey = config.privateKey;
 const key = Buffer.from(privateKey, 'hex');
 const url = 'https://ropsten.infura.io/';
-const blacklist_time = 30; //mins
+const blacklist_time = 60; //mins
 const recaptchaSecret = config.recaptchaSecret;
 
 // Axios request interceptor
@@ -68,8 +68,8 @@ function setupBlacklist(path) {
 // use blacklist to detemine ether eligbility
   // stat the file, if virgin touch the file and release the ether
   // if file exists check modified date
-  // < 30 mins reject
-  // > 30 mins touch the file and release
+  // < 60 mins reject
+  // > 60 mins touch the file and release
 function releaseEther(ip_path) {
   try {
     let stats = fs.statSync(ip_path);
