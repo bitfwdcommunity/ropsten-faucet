@@ -21,7 +21,7 @@ app.options('/api/eth_sendRawTransaction', cors());
 const privateKey = config.privateKey;
 const key = Buffer.from(privateKey, 'hex');
 const url = 'https://ropsten.infura.io/';
-const blacklist_time = 60; //mins
+const blacklist_time = 1440; //mins
 const recaptchaSecret = config.recaptchaSecret;
 
 // Axios request interceptor
