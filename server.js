@@ -21,7 +21,7 @@ app.options('/api/eth_sendRawTransaction', cors());
 const privateKey = config.privateKey;
 const key = Buffer.from(privateKey, 'hex');
 const url = 'https://ropsten.infura.io/';
-const blacklist_time = 1440; //mins
+const blacklistTime = 1440; //mins
 const recaptchaSecret = config.recaptchaSecret;
 
 // Axios request interceptor
@@ -70,25 +70,25 @@ function setupBlacklist(path) {
   // if file exists check modified date
   // < 60 mins reject
   // > 60 mins touch the file and release
-function releaseEther(ip_path) {
+function releaseEther(ipPath) {
   try {
-    let stats = fs.statSync(ip_path);
+    let stats = fs.statSync(ipPath);
 
     // mtime sample 2017-12-29T14:24:26.472Z
     var mtime = moment(stats['mtime']);
     var now = moment();
     var duration = moment.duration(now.diff(mtime));
 
-    if (duration.asMinutes() > blacklist_time) {
-        touch.sync(ip_path);
+    if (duration.asMinutes() > blacklistTime) {
+        touch.sync(ipPath);
         return true;
     } else {
-        console.log(ip_path + ' - blacklisted')
+        console.log(ipPath + ' - blacklisted')
         return false;
     }
   }
   catch (err) {
-      touch.sync(ip_path)
+      touch.sync(ipPath)
       return true;
   }
 }
@@ -103,7 +103,7 @@ app.post('/api/eth_sendRawTransaction', cors(), async (req, res) => {
   // get IP address and set up paths
   let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   let path = "/tmp/faucet/"
-  let ip_path = path + ip
+  let ipPath = path + ip
   setupBlacklist(path)
 
   // check captcha
@@ -129,7 +129,7 @@ app.post('/api/eth_sendRawTransaction', cors(), async (req, res) => {
   if (captchaResponse.data.hostname != ip) console.log('Captcha was not solved at host ip');
 
   // release variable below determines whether IP is blacklisted
-  let release = releaseEther(ip_path)
+  let release = releaseEther(ipPath)
   if (!release) {
     res.status(429).send('IP address temporarily blacklisted.');
     return false;
