@@ -168,7 +168,7 @@ class App extends Component {
             </div>
             <div className="row" style={{paddingTop: "50px", paddingBottom: "50px"}}>
               <div className="col">
-                <center>A partnership between <a href="https://bitfwd.xyz" target="_blank">bitfwd</a> community and <a href="https://github.com/bokkypoobah" target="_blank">Bokky PooBah</a><span className="txt-blue">!</span></center>
+                <center>A partnership between <a href="https://bitfwd.com" target="_blank">bitfwd</a> community and <a href="https://github.com/bokkypoobah" target="_blank">Bokky PooBah</a><span className="txt-blue">!</span></center>
               </div>
             </div>
           </div>
