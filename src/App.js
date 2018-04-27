@@ -186,7 +186,7 @@ class App extends Component {
             </div>
             <div className="row">
               <div className="col">
-                <center><a href="https://medium.com/bitfwd/how-to-do-an-ico-on-ethereum-in-less-than-20-minutes-a0062219374" target="_blank" className="fwd-btn" style={{fontSize: "1.4rem", padding: "12px 24px"}}>Learn how to issue your own ERC20 token</a></center>
+                <center><a href="https://medium.com/bitfwd/how-to-do-an-ico-on-ethereum-in-less-than-20-minutes-a0062219374" target="_blank" className="fwd-btn" style={{fontSize: "1.4rem", padding: "12px 24px"}}>Learn how to issue your own ICO</a></center>
               </div>
             </div>
             <div className="row" style={{paddingTop: "40px", paddingBottom: "40px"}}>
