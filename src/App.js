@@ -46,7 +46,7 @@ class App extends Component {
       case 'error':
         if (response === 'IP address temporarily blacklisted.') {
           this.notificationSystem.addNotification({
-            message: "Sorry we've been under attack please try again in 24 hours.",
+            message: "We only drip 1 RtETH per user per day, please try again tomorrow.",
             level: type,
             position: 'bc'
           });
