@@ -178,7 +178,7 @@ class App extends Component {
             <div className="row" style={{paddingTop: "40px", paddingBottom: "40px"}}>
               <div className="col">
               <center>
-                Do you want to learn how to issue your own ERC20 Token in less than 20 minutes?
+                Do you want to learn how to launch your own ICO on Ethereum in less than 20 minutes?
                 <br />
                 <span className="txt-blue">Check this post to learn how to do it:</span>
               </center>
@@ -186,7 +186,7 @@ class App extends Component {
             </div>
             <div className="row">
               <div className="col">
-                <center><a href="https://medium.com/bitfwd/how-to-issue-your-own-token-on-ethereum-in-less-than-20-minutes-ac1f8f022793" target="_blank" className="fwd-btn" style={{fontSize: "1.4rem", padding: "12px 24px"}}>Learn how to issue your own ERC20 token</a></center>
+                <center><a href="https://medium.com/bitfwd/how-to-do-an-ico-on-ethereum-in-less-than-20-minutes-a0062219374" target="_blank" className="fwd-btn" style={{fontSize: "1.4rem", padding: "12px 24px"}}>Learn how to issue your own ICO</a></center>
               </div>
             </div>
             <div className="row" style={{paddingTop: "40px", paddingBottom: "40px"}}>
