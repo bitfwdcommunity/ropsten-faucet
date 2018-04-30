@@ -69,3 +69,26 @@ a.fwd-btn {
 .hspace {
   height: 40px
 }
+
+.notice {
+  background: #02d7ea;
+  color: white;
+  height: 35px;
+  text-align: center;
+  padding-top: 5px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.notice-a {
+  color: white;
+}
+
+.notice-a:hover {
+  color: black;
+}
+
+.notice-span {
+  vertical-align: center;
+}
