@@ -73,20 +73,22 @@ a.fwd-btn {
 .notice {
   background: #02d7ea;
   color: white;
-  height: 35px;
+  height: 50px;
   text-align: center;
-  padding-top: 5px;
+  padding-top: 7.5px;
   position: fixed;
   top: 0;
   width: 100%;
+  font-size: 1.4em;
+  z-index: 1000;
 }
 
 .notice-a {
-  color: white;
+  color: black;
 }
 
 .notice-a:hover {
-  color: black;
+  color: white;
 }
 
 .notice-span {
