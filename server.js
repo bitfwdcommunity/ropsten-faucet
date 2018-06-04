@@ -23,6 +23,7 @@ const key = Buffer.from(privateKey, 'hex');
 const url = 'https://ropsten.infura.io/';
 const blacklistTime = 1440; //mins
 const recaptchaSecret = config.recaptchaSecret;
+const score = 0.8;
 
 // Axios request interceptor
 // axios.interceptors.request.use(request => {
@@ -125,7 +126,8 @@ app.post('/api/eth_sendRawTransaction', cors(), async (req, res) => {
     return res.status(500);
   }
 
-  if (!captchaResponse.data.success) return res.status(409).send('Invalid Recaptcha.');
+  if (captchaResponse.data.score < score) return res.status(409).send('Invalid Recaptcha.');
+  if (captchaResponse.data.action != 'token') return res.status(409).send('Invalid Recaptcha Action.')
   if (captchaResponse.data.hostname != ip) console.log('Captcha was not solved at host ip');
 
   // release variable below determines whether IP is blacklisted
